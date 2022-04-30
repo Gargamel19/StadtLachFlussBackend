@@ -194,7 +194,7 @@ def get_answer(answer_id):
 @app.route('/answer/<answer_id>/show', methods=['GET'])
 def show_answer(answer_id):
     try:
-        category = DatabaseAnswer.update_answer_visibility(answer_id, 1)
+        category = DatabaseAnswer.update_answer_visibility(answer_id, "True")
         return str(category)
     except AttributeError:
         abort(404)
@@ -203,7 +203,7 @@ def show_answer(answer_id):
 @app.route('/answer/<answer_id>/hide', methods=['GET'])
 def hide_answer(answer_id):
     try:
-        category = DatabaseAnswer.update_answer_visibility(answer_id, 0)
+        category = DatabaseAnswer.update_answer_visibility(answer_id, "False")
         return str(category)
     except AttributeError:
         abort(404)
