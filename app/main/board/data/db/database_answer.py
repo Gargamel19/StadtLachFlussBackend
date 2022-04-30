@@ -17,7 +17,7 @@ class DatabaseAnswer:
                   "CATEGORY_ID INTEGER NOT NULL," \
                   "PLAYER_ID INTEGER NOT NULL," \
                   "TEXT TEXT NOT NULL," \
-                  "ANSWER_VISIBLE BIT DEFAULT 1" \
+                  "ANSWER_VISIBLE TEXT DEFAULT 'False'" \
                   ")"
             DataBase.make_no_response_query(sql, DatabaseAnswer.path)
         except OperationalError:
