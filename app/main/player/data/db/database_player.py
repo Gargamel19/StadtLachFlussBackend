@@ -17,7 +17,7 @@ class DatabasePlayer:
         try:
             sql = "CREATE TABLE PLAYER(" \
                     "PLAYER_ID INTEGER PRIMARY KEY AUTOINCREMENT," \
-                    "playerNAME TEXT UNIQUE NOT NULL, " \
+                    "USERNAME TEXT UNIQUE NOT NULL, " \
                     "PASSWORD TEXT NOT NULL" \
                   ")"
             DataBase.make_no_response_query(sql, DatabasePlayer.path)
@@ -34,7 +34,7 @@ class DatabasePlayer:
 
     @staticmethod
     def get_by_player_name(player_name):
-        query = "SELECT * FROM PLAYER WHERE playerNAME = '{}'".format(player_name)
+        query = "SELECT * FROM PLAYER WHERE USERNAME = '{}'".format(player_name)
         answer = DataBase.make_multi_response_query(query, DatabasePlayer.path)
         if answer and len(answer) == 1:
             player_obj = answer[0]
@@ -55,7 +55,7 @@ class DatabasePlayer:
 
     @staticmethod
     def update_player_by_player_id(player_id, playername, password):
-        query = "UPDATE PLAYER SET playerNAME = '{}', PASSWORD = '{}' WHERE PLAYER_ID = {}".format(playername, password, player_id)
+        query = "UPDATE PLAYER SET USERNAME = '{}', PASSWORD = '{}' WHERE PLAYER_ID = {}".format(playername, password, player_id)
         DataBase.make_no_response_query(query, DatabasePlayer.path)
         return str(DatabasePlayer.get_by_player_id(player_id))
 
@@ -87,7 +87,7 @@ class DatabasePlayer:
     def insert_player(playername, pw):
         connection = sqlite3.connect(DatabasePlayer.path)
         cursor = connection.cursor()
-        query = "INSERT INTO PLAYER(playerNAME, PASSWORD) VALUES('{}','{}')".format(playername, pw)
+        query = "INSERT INTO PLAYER(USERNAME, PASSWORD) VALUES('{}','{}')".format(playername, pw)
         cursor.execute(query)
         player_id = cursor.lastrowid
         connection.commit()
