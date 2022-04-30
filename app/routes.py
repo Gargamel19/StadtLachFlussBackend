@@ -25,6 +25,8 @@ DatabaseAnswer.create_db()
 DatabaseGame.create_db()
 DatabaseRound.create_db()
 
+player_lifes = 5
+
 
 @app.route('/player', methods=['GET'])
 def get_all_player():
@@ -52,8 +54,9 @@ def insert_player():
     data = request.get_json(force=True)
     username = data["username"]
     pw = data["password"]
+    url = data["cam_url"]
     try:
-        player = DatabasePlayer.insert_player(username, pw)
+        player = DatabasePlayer.insert_player(username, pw, player_lifes, url)
         if player:
             return str(player)
         else:
