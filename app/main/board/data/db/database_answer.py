@@ -94,7 +94,7 @@ class DatabaseAnswer:
         connection = sqlite3.connect(DatabaseAnswer.path)
         cursor = connection.cursor()
         query = "INSERT INTO ANSWER(CATEGORY_ID, PLAYER_ID, TEXT, ANSWER_VISIBLE) " \
-                "VALUES({}, {}, '{}', {})".format(category_id, player_id, text, 1)
+                "VALUES({}, {}, '{}', {})".format(category_id, player_id, text, "False")
         cursor.execute(query)
         answer_id = cursor.lastrowid
         connection.commit()
