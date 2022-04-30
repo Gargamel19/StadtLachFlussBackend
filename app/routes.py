@@ -175,6 +175,33 @@ def insert_answer():
         abort(404)
 
 
+@app.route('/answer/<answer_id>', methods=['GET'])
+def get_answer(answer_id):
+    try:
+        category = DatabaseAnswer.get_by_answer_id(answer_id)
+        return str(category)
+    except AttributeError:
+        abort(404)
+
+
+@app.route('/answer/<answer_id>/show', methods=['GET'])
+def show_answer(answer_id):
+    try:
+        category = DatabaseAnswer.update_answer_visibility(answer_id, 1)
+        return str(category)
+    except AttributeError:
+        abort(404)
+
+
+@app.route('/answer/<answer_id>/hide', methods=['GET'])
+def hide_answer(answer_id):
+    try:
+        category = DatabaseAnswer.update_answer_visibility(answer_id, 0)
+        return str(category)
+    except AttributeError:
+        abort(404)
+
+
 @app.route('/category/<cat_id>/answers', methods=['GET'])
 def get_all_answers_of_cat(cat_id):
     try:

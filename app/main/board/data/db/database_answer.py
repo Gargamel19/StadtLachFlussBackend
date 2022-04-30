@@ -16,7 +16,8 @@ class DatabaseAnswer:
                   "ANSWER_ID INTEGER PRIMARY KEY AUTOINCREMENT," \
                   "CATEGORY_ID INTEGER NOT NULL," \
                   "PLAYER_ID INTEGER NOT NULL," \
-                  "TEXT TEXT NOT NULL" \
+                  "TEXT TEXT NOT NULL," \
+                  "ANSWER_VISIBLE BIT DEFAULT 0" \
                   ")"
             DataBase.make_no_response_query(sql, DatabaseAnswer.path)
         except OperationalError:
@@ -55,11 +56,17 @@ class DatabaseAnswer:
             AttributeError()
 
     @staticmethod
+    def update_answer_visibility(answer_id, visibility):
+        query = "UPDATE ANSWER SET ANSWER_VISIBLE = {} WHERE ANSWER_ID = {}".format(visibility, answer_id)
+        DataBase.make_no_response_query(query, DatabaseAnswer.path)
+        return DatabaseAnswer.get_by_answer_id(answer_id)
+
+    @staticmethod
     def insert_answer(category_id, player_id, text):
         connection = sqlite3.connect(DatabaseAnswer.path)
         cursor = connection.cursor()
-        query = "INSERT INTO ANSWER(CATEGORY_ID, PLAYER_ID, TEXT) " \
-                "VALUES({}, {}, '{}')".format(category_id, player_id, text)
+        query = "INSERT INTO ANSWER(CATEGORY_ID, PLAYER_ID, TEXT, ANSWER_VISIBLE) " \
+                "VALUES({}, {}, '{}', {})".format(category_id, player_id, text, 0)
         cursor.execute(query)
         answer_id = cursor.lastrowid
         connection.commit()
