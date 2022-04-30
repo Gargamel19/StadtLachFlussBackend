@@ -67,7 +67,7 @@ class DatabaseAnswer:
 
     @staticmethod
     def update_answer_visibility(answer_id, visibility):
-        query = "UPDATE ANSWER SET ANSWER_VISIBLE = {} WHERE ANSWER_ID = {}".format(visibility, answer_id)
+        query = "UPDATE ANSWER SET ANSWER_VISIBLE = '{}' WHERE ANSWER_ID = {}".format(visibility, answer_id)
         DataBase.make_no_response_query(query, DatabaseAnswer.path)
         return DatabaseAnswer.get_by_answer_id(answer_id)
 
