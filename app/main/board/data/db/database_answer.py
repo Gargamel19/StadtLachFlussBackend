@@ -73,7 +73,7 @@ class DatabaseAnswer:
 
     @staticmethod
     def update_answer_text(cat_id, player_id, text):
-        query = "UPDATE ANSWER SET TEXT = {} WHERE CATEGORY_ID = {} AND  PLAYER_ID = {}".format(text, cat_id, player_id)
+        query = "UPDATE ANSWER SET TEXT = '{}' WHERE CATEGORY_ID = {} AND PLAYER_ID = {}".format(text, cat_id, player_id)
         DataBase.make_no_response_query(query, DatabaseAnswer.path)
         return DatabaseAnswer.get_answer_from_category_and_player_by_category_id_and_player_id(cat_id, player_id)
 
