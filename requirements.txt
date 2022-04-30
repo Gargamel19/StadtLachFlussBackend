@@ -1,0 +1,8 @@
+flask
+bcrypt
+password_strength
+coverage
+pytest
+pytest-cov
+flask-cors
+
