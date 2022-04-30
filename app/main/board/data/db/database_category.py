@@ -49,7 +49,7 @@ class DatabaseCategory:
         if answer and len(answer) == 1:
             player_obj = answer[0]
             if player_obj:
-                category = Category(int(player_obj[0]), player_obj[1], player_obj[2])
+                category = Category(int(player_obj[0]), int(player_obj[1]), player_obj[2], player_obj[3])
                 return category
             else:
                 return player_obj
@@ -63,7 +63,7 @@ class DatabaseCategory:
         answers = DataBase.make_multi_response_query(query, DatabaseCategory.path)
         for cat in answers:
             if cat:
-                categorys.append(Category(int(cat[0]), cat[1], cat[2]))
+                categorys.append(Category(int(cat[0]), int(cat[1]), cat[2], cat[3]))
         return categorys
 
     @staticmethod
