@@ -191,7 +191,7 @@ def get_answer(answer_id):
         abort(404)
 
 
-@app.route('/answer/<answer_id>/show', methods=['GET'])
+@app.route('/answer/<answer_id>/show', methods=['PUT'])
 def show_answer(answer_id):
     try:
         category = DatabaseAnswer.update_answer_visibility(answer_id, "True")
@@ -200,7 +200,7 @@ def show_answer(answer_id):
         abort(404)
 
 
-@app.route('/answer/<answer_id>/hide', methods=['GET'])
+@app.route('/answer/<answer_id>/hide', methods=['PUT'])
 def hide_answer(answer_id):
     try:
         category = DatabaseAnswer.update_answer_visibility(answer_id, "False")
