@@ -59,7 +59,7 @@ class DatabaseAnswer:
         if answer and len(answer) == 1:
             player_obj = answer[0]
             if player_obj:
-                return Answer(int(player_obj[0]), int(player_obj[1]), player_obj[2], player_obj[3])
+                return Answer(int(player_obj[0]), int(player_obj[1]), int(player_obj[2]), player_obj[3], player_obj[4])
             else:
                 return player_obj
         else:
