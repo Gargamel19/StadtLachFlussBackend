@@ -17,7 +17,7 @@ class DatabaseAnswer:
                   "CATEGORY_ID INTEGER NOT NULL," \
                   "PLAYER_ID INTEGER NOT NULL," \
                   "TEXT TEXT NOT NULL," \
-                  "ANSWER_VISIBLE BIT DEFAULT 0" \
+                  "ANSWER_VISIBLE BIT DEFAULT 1" \
                   ")"
             DataBase.make_no_response_query(sql, DatabaseAnswer.path)
         except OperationalError:
@@ -82,7 +82,7 @@ class DatabaseAnswer:
         connection = sqlite3.connect(DatabaseAnswer.path)
         cursor = connection.cursor()
         query = "INSERT INTO ANSWER(CATEGORY_ID, PLAYER_ID, TEXT, ANSWER_VISIBLE) " \
-                "VALUES({}, {}, '{}', {})".format(category_id, player_id, text, 0)
+                "VALUES({}, {}, '{}', {})".format(category_id, player_id, text, 1)
         cursor.execute(query)
         answer_id = cursor.lastrowid
         connection.commit()
