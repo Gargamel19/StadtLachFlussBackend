@@ -26,6 +26,15 @@ DatabaseGame.create_db()
 DatabaseRound.create_db()
 
 
+@app.route('/player', methods=['GET'])
+def get_categorys():
+    try:
+        player = DatabasePlayer.get_all_player()
+        return str(player)
+    except AttributeError:
+        abort(404)
+
+
 @app.route('/player/<player_id>', methods=['GET'])
 def get_player_by_player_is(player_id):
     try:

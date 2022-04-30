@@ -33,6 +33,16 @@ class DatabasePlayer:
             print("Table data dont Exists")
 
     @staticmethod
+    def get_all_player():
+        query = "SELECT * FROM PLAYER"
+        categorys = []
+        answers = DataBase.make_multi_response_query(query, DatabasePlayer.path)
+        for player in answers:
+            if player:
+                categorys.append(Player(int(player[0]), player[1], player[2]))
+        return categorys
+
+    @staticmethod
     def get_by_player_name(player_name):
         query = "SELECT * FROM PLAYER WHERE USERNAME = '{}'".format(player_name)
         answer = DataBase.make_multi_response_query(query, DatabasePlayer.path)
