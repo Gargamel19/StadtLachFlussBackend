@@ -14,4 +14,4 @@ class Answer:
 
     def __repr__(self):
         return str({"answer_id": self.answer_id, "category_id": self.category_id, "player_id": self.player_id,
-                    "text": self.text, "answer_visible": self.answer_visible}).replace("'", "\"")
+                    "text": self.text, "answer_visible": str(self.answer_visible).lower()}).replace("'", "\"")
