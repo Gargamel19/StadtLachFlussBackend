@@ -27,7 +27,7 @@ DatabaseRound.create_db()
 
 
 @app.route('/player', methods=['GET'])
-def get_categorys():
+def get_all_player():
     try:
         player = DatabasePlayer.get_all_player()
         return str(player)
