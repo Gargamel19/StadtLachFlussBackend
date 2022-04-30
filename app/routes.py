@@ -169,7 +169,11 @@ def insert_answer():
     player_id = data["player_id"]
     text = data["text"]
     try:
-        category = DatabaseAnswer.insert_answer(cat_id, player_id, text)
+        if DatabaseAnswer.get_answer_from_category_and_player_by_category_id_and_player_id(cat_id, player_id):
+            DatabaseAnswer.update_answer_text(cat_id, player_id, text)
+            category = DatabaseAnswer.get_answer_from_category_and_player_by_category_id_and_player_id(cat_id, player_id)
+        else:
+            category = DatabaseAnswer.insert_answer(cat_id, player_id, text)
         return str(category)
     except AttributeError:
         abort(404)

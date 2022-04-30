@@ -42,6 +42,16 @@ class DatabaseAnswer:
         return answers
 
     @staticmethod
+    def get_answer_from_category_and_player_by_category_id_and_player_id(cat_id, player_id):
+        query = "SELECT * FROM ANSWER WHERE CATEGORY_ID = {} AND PLAYER_ID = {}".format(cat_id, player_id)
+        answers = []
+        answer = DataBase.make_multi_response_query(query, DatabaseAnswer.path)
+        for cat in answer:
+            if cat:
+                answers.append(Answer(int(cat[0]), int(cat[1]), int(cat[2]), cat[3], bool(cat[4])))
+        return answers
+
+    @staticmethod
     def get_by_answer_id(answer_id):
         query = "SELECT * FROM ANSWER WHERE ANSWER_ID = {}".format(answer_id)
         answer = DataBase.make_multi_response_query(query, DatabaseAnswer.path)
@@ -62,6 +72,12 @@ class DatabaseAnswer:
         return DatabaseAnswer.get_by_answer_id(answer_id)
 
     @staticmethod
+    def update_answer_text(cat_id, player_id, text):
+        query = "UPDATE ANSWER SET TEXT = {} WHERE CATEGORY_ID = {} AND  PLAYER_ID = {}".format(text, cat_id, player_id)
+        DataBase.make_no_response_query(query, DatabaseAnswer.path)
+        return DatabaseAnswer.get_answer_from_category_and_player_by_category_id_and_player_id(cat_id, player_id)
+
+    @staticmethod
     def insert_answer(category_id, player_id, text):
         connection = sqlite3.connect(DatabaseAnswer.path)
         cursor = connection.cursor()
@@ -73,4 +89,3 @@ class DatabaseAnswer:
         connection.close()
 
         return DatabaseAnswer.get_by_answer_id(answer_id)
-
