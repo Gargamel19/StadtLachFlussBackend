@@ -14,6 +14,7 @@ class DatabaseCategory:
         try:
             sql = "CREATE TABLE CATEGORY(" \
                   "CATEGORY_ID INTEGER PRIMARY KEY AUTOINCREMENT," \
+                  "GAME_ID INTEGER,"\
                   "USERNAME TEXT NOT NULL," \
                   "PROPOSAL TEXT" \
                   ")"
@@ -56,11 +57,21 @@ class DatabaseCategory:
             AttributeError()
 
     @staticmethod
-    def insert_category(column_id, proposal):
+    def get_categorys_by_game_by_game_id(game_id):
+        query = "SELECT * FROM CATEGORY WHERE GAME_ID = '{}'".format(game_id)
+        categorys = []
+        answers = DataBase.make_multi_response_query(query, DatabaseCategory.path)
+        for cat in answers:
+            if cat:
+                categorys.append(Category(int(cat[0]), cat[1], cat[2]))
+        return categorys
+
+    @staticmethod
+    def insert_category(game_id, column_id, proposal):
         connection = sqlite3.connect(DatabaseCategory.path)
         cursor = connection.cursor()
-        query = "INSERT INTO CATEGORY(USERNAME, PROPOSAL) " \
-                "VALUES('{}', '{}')".format(column_id, proposal)
+        query = "INSERT INTO CATEGORY(GAME_ID, USERNAME, PROPOSAL) " \
+                "VALUES({}, '{}', '{}')".format(game_id, column_id, proposal)
         cursor.execute(query)
         category_id = cursor.lastrowid
         connection.commit()

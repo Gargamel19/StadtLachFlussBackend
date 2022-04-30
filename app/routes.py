@@ -67,8 +67,9 @@ def insert_category():
     data = request.get_json(force=True)
     name = data["name"]
     proposal = data["proposal"]
+    game_id = data["game_id"]
     try:
-        category = DatabaseCategory.insert_category(name, proposal)
+        category = DatabaseCategory.insert_category(game_id, name, proposal)
         return str(category)
     except AttributeError:
         abort(404)
@@ -108,6 +109,15 @@ def get_all_games():
 def get_game(game_id):
     try:
         category = DatabaseGame.get_by_game_id(game_id)
+        return str(category)
+    except AttributeError:
+        abort(404)
+
+
+@app.route('/game/<game_id>/categorys', methods=['GET'])
+def get_gategorys_of_game(game_id):
+    try:
+        category = DatabaseCategory.get_categorys_by_game_by_game_id(game_id)
         return str(category)
     except AttributeError:
         abort(404)
