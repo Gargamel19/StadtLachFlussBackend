@@ -18,6 +18,8 @@ class DatabasePlayer:
             sql = "CREATE TABLE PLAYER(" \
                     "PLAYER_ID INTEGER PRIMARY KEY AUTOINCREMENT," \
                     "USERNAME TEXT UNIQUE NOT NULL, " \
+                    "LIFES INTEGER," \
+                    "CAM_URL TEXT," \
                     "PASSWORD TEXT NOT NULL" \
                   ")"
             DataBase.make_no_response_query(sql, DatabasePlayer.path)
@@ -39,7 +41,7 @@ class DatabasePlayer:
         answers = DataBase.make_multi_response_query(query, DatabasePlayer.path)
         for player in answers:
             if player:
-                players.append(Player(int(player[0]), player[1], player[2]))
+                players.append(Player(int(player[0]), player[1], int(player[2]), player[3]))
         return players
 
     @staticmethod
@@ -49,7 +51,7 @@ class DatabasePlayer:
         if answer and len(answer) == 1:
             player_obj = answer[0]
             if player_obj:
-                player = Player(int(player_obj[0]), player_obj[1], player_obj[2])
+                player = Player(int(player_obj[0]), player_obj[1], int(player_obj[2]), player_obj[3])
                 return player
             else:
                 return player_obj
@@ -65,7 +67,8 @@ class DatabasePlayer:
 
     @staticmethod
     def update_player_by_player_id(player_id, playername, password):
-        query = "UPDATE PLAYER SET USERNAME = '{}', PASSWORD = '{}' WHERE PLAYER_ID = {}".format(playername, password, player_id)
+        query = "UPDATE PLAYER SET USERNAME = '{}', PASSWORD = '{}' WHERE PLAYER_ID = {}"\
+            .format(playername, password, player_id)
         DataBase.make_no_response_query(query, DatabasePlayer.path)
         return str(DatabasePlayer.get_by_player_id(player_id))
 
@@ -76,7 +79,7 @@ class DatabasePlayer:
         if len(answer) == 1:
             player_obj = answer[0]
             if player_obj:
-                player = Player(int(player_obj[0]), player_obj[1], player_obj[2])
+                player = Player(int(player_obj[0]), player_obj[1], int(player_obj[2]), player_obj[3])
                 return player
             else:
                 return player_obj
@@ -94,10 +97,10 @@ class DatabasePlayer:
             return False
 
     @staticmethod
-    def insert_player(playername, pw):
+    def insert_player(playername, pw, lifes, cam_url):
         connection = sqlite3.connect(DatabasePlayer.path)
         cursor = connection.cursor()
-        query = "INSERT INTO PLAYER(USERNAME, PASSWORD) VALUES('{}','{}')".format(playername, pw)
+        query = "INSERT INTO PLAYER(USERNAME, PASSWORD, LIFES, CAM_URL) VALUES('{}','{}', {}, '{}')".format(playername, pw, lifes, cam_url)
         cursor.execute(query)
         player_id = cursor.lastrowid
         connection.commit()
