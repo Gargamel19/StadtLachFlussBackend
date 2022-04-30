@@ -38,7 +38,10 @@ class DatabaseAnswer:
         answer = DataBase.make_multi_response_query(query, DatabaseAnswer.path)
         for cat in answer:
             if cat:
-                answers.append(Answer(int(cat[0]), int(cat[1]), int(cat[2]), cat[3], cat[4]))
+                if bool(cat[4]):
+                    answers.append(Answer(int(cat[0]), int(cat[1]), int(cat[2]), cat[3], "True"))
+                else:
+                    answers.append(Answer(int(cat[0]), int(cat[1]), int(cat[2]), cat[3], "False"))
         return answers
 
     @staticmethod
@@ -48,7 +51,10 @@ class DatabaseAnswer:
         answer = DataBase.make_multi_response_query(query, DatabaseAnswer.path)
         for cat in answer:
             if cat:
-                answers.append(Answer(int(cat[0]), int(cat[1]), int(cat[2]), cat[3], cat[4]))
+                if bool(cat[4]):
+                    answers.append(Answer(int(cat[0]), int(cat[1]), int(cat[2]), cat[3], "True"))
+                else:
+                    answers.append(Answer(int(cat[0]), int(cat[1]), int(cat[2]), cat[3], "False"))
         return answers
 
     @staticmethod
@@ -58,7 +64,10 @@ class DatabaseAnswer:
         if answer and len(answer) == 1:
             player_obj = answer[0]
             if player_obj:
-                answer = Answer(int(player_obj[0]), int(player_obj[1]), int(player_obj[2]), player_obj[3], player_obj[4])
+                if bool(player_obj[4]):
+                    answer = Answer(int(player_obj[0]), int(player_obj[1]), int(player_obj[2]), player_obj[3], "True")
+                else:
+                    answer = Answer(int(player_obj[0]), int(player_obj[1]), int(player_obj[2]), player_obj[3], "False")
                 return answer
             else:
                 return player_obj
